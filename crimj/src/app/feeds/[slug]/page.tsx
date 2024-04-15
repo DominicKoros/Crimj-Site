@@ -64,7 +64,7 @@ export default function Feed({ params }: { params: { slug: string} }) {
     href={item.link}
     target="_blank"
   >
-  <Card className="h-[375px] mb:h-[325px] lg:h-[300px] flex flex-col mb-2">
+  <Card className="h-[550px] mb:h-[335px] lg:h-[325px] flex flex-col mb-2">
     <CardHeader>
       <CardTitle>{item.title}</CardTitle>
     </CardHeader>
