@@ -51,35 +51,34 @@ export default function Feed({ params }: { params: { slug: string} }) {
   
 
   if(!isLoading) {
-  return (
-    <div className="px-6 lg:px-12 py-12 w-auto mx-auto">
-      {/* {feed && feed.title} */}
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pl-2 mb-12">
-      {feed && feed.title}
-      </h1>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-      {items.map((item: CustomItem) => (
-  <Link
-    key={item.link}
-    href={item.link}
-    target="_blank"
-  >
-  <Card className="h-[550px] mb:h-[335px] lg:h-[325px] flex flex-col mb-2">
-    <CardHeader>
-      <CardTitle>{item.title}</CardTitle>
-    </CardHeader>
-    <CardContent className="flex flex-col space-y-1.5">
-    {item.content}
-    </CardContent>
-    <CardFooter className="mt-auto">
-      <p className="">{format(new Date(item.isoDate), "PPP")}</p>
-    </CardFooter>
-  </Card>
-  </Link>
-))}
+    return (
+      <div className="px-6 lg:px-12 py-12 w-auto mx-auto">
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pl-2 mb-12">
+          {feed && feed.title}
+        </h1>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 items-stretch">
+          {items.map((item: CustomItem) => (
+            <Link
+              key={item.link}
+              href={item.link}
+              target="_blank"
+            >
+              <Card className="flex flex-col h-full mb-2">
+                <CardHeader>
+                  <CardTitle>{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-grow overflow-auto">
+                  {item.content}
+                </CardContent>
+                <CardFooter className="mt-auto">
+                  <p className="">{format(new Date(item.isoDate), "PPP")}</p>
+                </CardFooter>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </div>
-    </div>
-  )
+    )
 }
 
 }
