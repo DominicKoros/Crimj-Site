@@ -18,7 +18,7 @@ export default function Home() {
         Latest News from the Cybersecurity World
       </h2>
     </div>
-    <div className="px-6 lg:max-w-[850px] mx-auto pb-[200px]">
+    <div className="px-6 lg:max-w-[850px] mx-auto pb-[290px]">
       {/* <h1 className="font-bold text-5xl mb-12 text-center">Cybersecurity News</h1> */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 h-[200px] lg:mt-[40px] justify-center">
         {FEEDS.map((feed) => (
@@ -35,8 +35,8 @@ export default function Home() {
            />
          </div>
        </div>
-      </Link>
-        ))}
+        </Link>
+          ))}
       </div>
     </div>
     </>

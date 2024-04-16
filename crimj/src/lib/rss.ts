@@ -21,6 +21,13 @@ export const FEEDS = [
       url: "https://www.recordedfuture.com/feed",
       querySelect: "img.z-10",
       image: "JtfeN2W2_400x400.png",
+    },
+    {
+      slug: "wired",
+      title: "Wired",
+      url: "https://www.wired.com/feed/category/security/latest/rss",
+      querySelect: "div",
+      image: "YvWAQD2L_400x400.jpg",
     }
   ];
 
