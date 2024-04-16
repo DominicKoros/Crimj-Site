@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { FEEDS } from "@/lib/rss";
 import { format } from "date-fns";
 import Link from "next/link";
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 
 import {
   Card,
@@ -36,7 +38,11 @@ export default function Feed({ params }: { params: { slug: string} }) {
       const { items: detailedItems } = await res.json();
       
       if (Array.isArray(detailedItems)) {
-        setItems(detailedItems);
+        const sanitizedItems = detailedItems.map(item => ({
+          ...item,
+          content: DOMPurify.sanitize(item.content)
+        }));
+        setItems(sanitizedItems);
       } else {
         console.error('Error: items is not an array', detailedItems);
       }
@@ -50,7 +56,7 @@ export default function Feed({ params }: { params: { slug: string} }) {
   // console.log(items);
   
 
-  if(!isLoading) {
+  if (!isLoading) {
     return (
       <div className="px-6 lg:px-12 py-12 w-auto mx-auto">
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pl-2 mb-12">
@@ -58,27 +64,29 @@ export default function Feed({ params }: { params: { slug: string} }) {
         </h1>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 items-stretch">
           {items.map((item: CustomItem) => (
-            <Link
-              key={item.link}
-              href={item.link}
-              target="_blank"
-            >
-              <Card className="flex flex-col h-full mb-2">
-                <CardHeader>
-                  <CardTitle>{item.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-grow overflow-auto">
-                  {item.content}
-                </CardContent>
-                <CardFooter className="mt-auto">
-                  <p className="">{format(new Date(item.isoDate), "PPP")}</p>
-                </CardFooter>
-              </Card>
-            </Link>
+            item.content.length > 0 && (
+              <Link
+                key={item.link}
+                href={item.link}
+                target="_blank"
+              >
+                <Card className="flex flex-col h-full mb-2">
+                  <CardHeader>
+                    <CardTitle>{item.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-grow overflow-auto">
+                    {parse(item.content)}
+                  </CardContent>
+                  <CardFooter className="mt-auto">
+                    <p className="">{format(new Date(item.isoDate), "PPP")}</p>
+                  </CardFooter>
+                </Card>
+              </Link>
+            )
           ))}
         </div>
       </div>
-    )
-}
+    );
+  }
 
 }
